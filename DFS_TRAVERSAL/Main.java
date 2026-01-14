@@ -62,6 +62,6 @@ public class Main{
         g.addEdge(2, 3);
         g.printGraph();
         g.bfs(0);
-        g.dfs(0, new boolean[V]);
+        g.dfs(0, new boolean[g.V]);
     }
 }
