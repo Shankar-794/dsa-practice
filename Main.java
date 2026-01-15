@@ -1,47 +1,68 @@
-
 import java.util.*;
-
-class Graph {
-
+class Graph{
     int V;
-    LinkedList<LinkedList<Integer>> adj;
-
-    Graph(int V) {
+    ArrayList<ArrayList<Integer>> adj;
+    Graph(int V){
         this.V = V;
-        adj = new LinkedList<>();
-        for(int i=0;i<V; i++){
-            adj.add(new LinkedList<>());
+        adj = new ArrayList<>();
+        for(int i=0;i<V;i++){
+            adj.add(new ArrayList<>());
         }
     }
-    
-
     void addEdge(int u, int v){
         adj.get(u).add(v);
         adj.get(v).add(u);
     }
-
-    void printGraph() {
-
+    void printGraph(){
         for(int i=0;i<V;i++){
-            System.out.print(i+ " -> ");
-            for(int neighbour: adj.get(i)){
-                System.out.print(neighbour + " ");
+            System.out.print(i+" -> ");
+            for(int neighbour:adj.get(i)){
+                System.out.print(neighbour+" ");
             }
-            System.out.println("");
+            System.out.println();
+        }
+    }
+
+    void bfs(int start){
+        boolean[] visited = new boolean[V];
+        Queue<Integer> q = new LinkedList<>();
+        visited[start] = true;
+        q.add(start);
+        System.out.print("BFS TRAVERSAL: ");
+        while(!q.isEmpty()){
+            int node = q.poll();
+            System.out.print(node+" ");
+            for(int neighbour:adj.get(node)){
+                if(!visited[neighbour]){
+                    visited[neighbour] = true;
+                    q.add(neighbour);
+                }
+            }
+        }
+    }
+    void dfs(int node, boolean[] visited){
+        visited[node] = true;
+        System.out.print(node+" ");
+        for(int neighbour:adj.get(node)){
+            if(!visited[neighbour]){
+                visited[neighbour] = true;
+                dfs(neighbour, visited);
+            }
         }
     }
 }
 
-public class Main {
-
-    public static void main(String[] args) {
-        Graph g = new Graph(5);
+public class Main{
+    public static void main(String[] a){
+        Graph g = new Graph(4);
         g.addEdge(0, 1);
         g.addEdge(0, 2);
-        g.addEdge(1, 2);
         g.addEdge(1, 3);
-        g.addEdge(2, 4);
-        g.addEdge(3, 4);
+        g.addEdge(2, 3);
         g.printGraph();
+        g.bfs(0);
+        System.out.println();
+        System.out.print("DFS TRAVERSAL: ");
+        g.dfs(0, new boolean[g.V]);
     }
 }
