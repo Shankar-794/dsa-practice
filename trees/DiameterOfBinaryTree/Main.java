@@ -8,7 +8,7 @@ class Node {
     }
 }
 
-public class DiameterOfBinaryTree {
+public class Main {
 
     static int diameter = 0;
 
